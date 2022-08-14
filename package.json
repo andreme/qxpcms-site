@@ -1,0 +1,20 @@
+{
+  "name": "qxpcms-site",
+  "version": "0.0.1",
+  "description": "qxpCMS site module",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andreme/qxpcms-site.git"
+  },
+  "homepage": "https://github.com/andreme/qxpcms-site",
+  "author": "Andre Meyer",
+  "keywords": [
+    "qxpcms"
+  ],
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

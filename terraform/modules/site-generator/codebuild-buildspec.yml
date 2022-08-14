@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12.x
+  pre_build:
+    commands:
+      - BUILD_ID=$(echo $CODEBUILD_BUILD_ID | cut -d ":" -f 2)
+      - aws events put-events --cli-input-json '{"Entries":[{"Source":"qxpcms.'"$PROJECT_NAME"'","Detail":"{\"action\":\"build-site-generator.start\",\"buildId\":\"'"$BUILD_ID"'\"}","EventBusName":"'"$PROJECT_NAME"'-events","DetailType":"cms.log.system"}]}' > /dev/null
+      - cd site
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - export IMAGE=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo $IMAGE
+      - echo Build started on `date`
+      - docker pull $IMAGE || true
+      - echo Building the Docker image...
+      - docker build --cache-from=$IMAGE -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $IMAGE
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $IMAGE
+      - STATUS="finished" && [[ "$CODEBUILD_BUILD_SUCCEEDING" == "0" ]] && STATUS="failed"
+      - aws events put-events --cli-input-json '{"Entries":[{"Source":"qxpcms.'"$PROJECT_NAME"'","Detail":"{\"action\":\"build-site-generator.'"$STATUS"'\",\"buildId\":\"'"$BUILD_ID"'\"}","EventBusName":"'"$PROJECT_NAME"'-events","DetailType":"cms.log.system"}]}' > /dev/null
