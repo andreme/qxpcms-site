@@ -52,4 +52,7 @@ module "hosting" {
 
   project_name = var.project_name
 
+  aliases = var.hosting_aliases
+
+  certificate_arn = var.hosting_certificate_arn
 }

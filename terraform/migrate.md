@@ -2,11 +2,12 @@
 
 ## Version 0.0.0
 
-
-Add `main.tf`
+Add `main.tf` and `outputs.tf`
 
 ```
-terraform init
+site> yarn add qxpcms-site
+
+terraform> terraform init
 
 terraform state mv aws_cloudfront_distribution.cms-server module.qxpcms.module.cms-server.aws_cloudfront_distribution.cms-server
 terraform state mv aws_s3_bucket.cms-files module.qxpcms.module.cms-server.aws_s3_bucket.cms-files

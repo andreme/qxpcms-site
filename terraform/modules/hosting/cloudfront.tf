@@ -13,6 +13,8 @@ resource "aws_cloudfront_distribution" "site" {
   enabled = true
   is_ipv6_enabled = true
 
+  aliases = var.aliases
+
   default_cache_behavior {
     allowed_methods = [
       "GET",
@@ -36,9 +38,10 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
-//    acm_certificate_arn = data.aws_acm_certificate.useast1.arn
-//    ssl_support_method = "sni-only"
+    cloudfront_default_certificate = var.certificate_arn == ""
+    acm_certificate_arn = var.certificate_arn
+    ssl_support_method = var.certificate_arn == "" ? null : "sni-only"
+    minimum_protocol_version = var.certificate_arn == "" ? "TLSv1" : "TLSv1.2_2019"
   }
 
 //  logging_config {
