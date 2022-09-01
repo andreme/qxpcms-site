@@ -2,7 +2,9 @@
 
 ## Version 0.0.0
 
-Add `main.tf` and `outputs.tf`
+Add `main.tf`, `outputs.tf`, `.terraform.lock.hcl` and `versions.tf`
+
+Remove archive from `tfconfig.tf` and clear `.terraform/modules` and `.terraform/providers`
 
 ```
 site> yarn add qxpcms-site
