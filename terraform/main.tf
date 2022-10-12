@@ -52,7 +52,13 @@ module "hosting" {
 
   project_name = var.project_name
 
-  aliases = var.hosting_aliases
+  domains = var.hosting_domains
 
   certificate_arn = var.hosting_certificate_arn
+
+  redirect_from_naked_to_www = var.hosting_redirect_from_naked_to_www
+
+  providers = {
+    aws.us-east-1 = aws.us-east-1
+  }
 }

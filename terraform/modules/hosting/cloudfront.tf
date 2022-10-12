@@ -13,7 +13,7 @@ resource "aws_cloudfront_distribution" "site" {
   enabled = true
   is_ipv6_enabled = true
 
-  aliases = var.aliases
+  aliases = var.domains
 
   default_cache_behavior {
     allowed_methods = [
@@ -29,6 +29,11 @@ resource "aws_cloudfront_distribution" "site" {
     compress = true
 
     viewer_protocol_policy = "redirect-to-https"
+
+    function_association {
+      event_type = var.redirect_from_naked_to_www ? "viewer-request" : ""
+      function_arn = var.redirect_from_naked_to_www ? aws_cloudfront_function.redirect-naked-to-www[0].arn : ""
+    }
   }
 
   restrictions {
@@ -38,10 +43,10 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = var.certificate_arn == ""
-    acm_certificate_arn = var.certificate_arn
-    ssl_support_method = var.certificate_arn == "" ? null : "sni-only"
-    minimum_protocol_version = var.certificate_arn == "" ? "TLSv1" : "TLSv1.2_2019"
+    cloudfront_default_certificate = var.certificate_arn == "" && length(aws_acm_certificate.site) == 0
+    acm_certificate_arn = length(aws_acm_certificate.site) > 0 ? aws_acm_certificate.site[0].arn : var.certificate_arn
+    ssl_support_method = var.certificate_arn == "" && length(aws_acm_certificate.site) == 0 ? null : "sni-only"
+    minimum_protocol_version = var.certificate_arn == "" && length(aws_acm_certificate.site) == 0 ? "TLSv1" : "TLSv1.2_2019"
   }
 
 //  logging_config {
@@ -107,13 +112,32 @@ resource "aws_cloudfront_cache_policy" "default" {
 //  }
 //}
 
-//resource "aws_s3_bucket" "cf_main" {
-//  bucket = "palletwatch-${var.name}-cloudfront"
-//
-//  lifecycle {
-//    ignore_changes = [grant]
-//  }
-//}
-
-
 // TODO set cf policies once supported by terraform: https://aws.amazon.com/about-aws/whats-new/2020/07/cloudfront-cache-key-policy/
+
+resource "aws_cloudfront_function" "redirect-naked-to-www" {
+  count = var.redirect_from_naked_to_www ? 1 : 0
+  name = "${var.project_name}-redirect-naked-to-www"
+  runtime = "cloudfront-js-1.0"
+  publish = true
+  code = <<SRC
+function handler(event) {
+    var request = event.request;
+    var host = (request.headers.host || {}).value;
+
+    if (host === '${var.domains[0]}') {
+          var response = {
+              statusCode: 301,
+              statusDescription: 'Moved Permanently',
+              headers: {
+                  location: {
+                      value: 'https://www.${var.domains[0]}',
+                  }
+              }
+          };
+
+          return response;
+    }
+    return request;
+}
+SRC
+}
