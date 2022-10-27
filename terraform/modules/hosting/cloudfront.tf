@@ -30,9 +30,12 @@ resource "aws_cloudfront_distribution" "site" {
 
     viewer_protocol_policy = "redirect-to-https"
 
-    function_association {
-      event_type = var.redirect_from_naked_to_www ? "viewer-request" : ""
-      function_arn = var.redirect_from_naked_to_www ? aws_cloudfront_function.redirect-naked-to-www[0].arn : ""
+    dynamic "function_association" {
+      for_each = var.redirect_from_naked_to_www ? [{event_type = "viewer-request", function_arn = aws_cloudfront_function.redirect-naked-to-www[0].arn}] : []
+      content {
+        event_type = function_association.value.event_type
+        function_arn = function_association.value.function_arn
+      }
     }
   }
 

@@ -30,3 +30,20 @@ output "SITE_DEPLOYMENT_LOG_GROUP_ARN" {
 output "SITE_DEPLOYMENT_LOG_GROUP" {
   value = aws_cloudwatch_log_group.site-deployment.name
 }
+
+output "CMS_FILES_BUCKET" {
+  value = aws_s3_bucket.cms-files.bucket
+}
+
+output "CMS_FILES_BUCKET_ARN" {
+  value = aws_s3_bucket.cms-files.arn
+}
+
+output "CMS_TABLE_CMS_ARN" {
+  value = aws_dynamodb_table.cms.arn
+}
+
+output "CMS_TABLE_LIST_ARN" {
+  value = aws_dynamodb_table.list.arn
+}
+

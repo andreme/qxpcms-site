@@ -2,9 +2,13 @@
 
 ## Version 0.0.0
 
-Add `main.tf`, `outputs.tf`, `.terraform.lock.hcl` and `versions.tf`
+Copy `main.tf`, `outputs.tf`, `.terraform.lock.hcl` and `versions.tf` into `terraform/`
 
 Remove archive from `tfconfig.tf` and clear `.terraform/modules` and `.terraform/providers`
+
+Update `main.tf` with values from `env.tf`
+
+Remove cms terraform files (including `env.tf`)
 
 ```
 site> yarn add qxpcms-site
