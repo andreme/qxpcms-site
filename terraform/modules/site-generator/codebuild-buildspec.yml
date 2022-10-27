@@ -25,5 +25,5 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $IMAGE
-      - STATUS="finished" && [[ "$CODEBUILD_BUILD_SUCCEEDING" == "0" ]] && STATUS="failed"
+      - STATUS="finished" && [[ "$CODEBUILD_BUILD_SUCCEEDING" == "0" ]] && STATUS="failed" || true
       - aws events put-events --cli-input-json '{"Entries":[{"Source":"qxpcms.'"$PROJECT_NAME"'","Detail":"{\"action\":\"build-site-generator.'"$STATUS"'\",\"buildId\":\"'"$BUILD_ID"'\"}","EventBusName":"'"$PROJECT_NAME"'-events","DetailType":"cms.log.system"}]}' > /dev/null
