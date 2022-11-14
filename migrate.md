@@ -1,4 +1,7 @@
 ## Version 0.0.8
+
+In `site/` remove `Dockerfile` and `generate-deploy-site.sh`
+
 ```
 terraform> terraform apply
 ```
