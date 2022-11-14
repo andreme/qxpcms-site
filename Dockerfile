@@ -10,13 +10,12 @@ RUN yum install unzip -y && \
 
 WORKDIR /app
 
+ENV BROWSERSLIST_IGNORE_OLD_DATA=TRUE
+
 COPY package.json yarn.lock ./
-RUN yarn install --production=false
+RUN yarn install --production=false \
+    chmod +x node_modules/qxpcms-site/bin/generate-deploy-site.sh
 
 COPY . .
-
-RUN chmod +x generate-deploy-site.sh
-
-ENV BROWSERSLIST_IGNORE_OLD_DATA=TRUE
 
 ENTRYPOINT ["/app/node_modules/qxpcms-site/bin/generate-deploy-site.sh"]
