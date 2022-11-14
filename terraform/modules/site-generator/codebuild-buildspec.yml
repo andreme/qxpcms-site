@@ -13,9 +13,10 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
       - echo Download Dockerfile
       - DOCKERFILE=https://raw.githubusercontent.com/andreme/qxpcms-site/v$(grep "^qxpcms-site" yarn.lock | cut -d "@" -f 2 | cut -d ":" -f 1)/Dockerfile
-      - curl -o Dockerfile $DOCKERFILE
+      - curl -s -o Dockerfile $DOCKERFILE
   build:
     commands:
+      - AWS_ACCOUNT_ID=$(echo $CODEBUILD_BUILD_ARN | cut -d ":" -f 5)
       - export IMAGE=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - echo $IMAGE
       - echo Build started on `date`
