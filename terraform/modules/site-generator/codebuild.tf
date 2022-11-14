@@ -96,21 +96,9 @@ resource "aws_codebuild_project" "build-site-generator" {
 
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
-    image = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    image = "aws/codebuild/amazonlinux2-x86_64-standard:4.0"
     type = "LINUX_CONTAINER"
     privileged_mode = true
-
-    // TODO built in: AWS_REGION
-    environment_variable {
-      name = "AWS_DEFAULT_REGION"
-      value = data.aws_region.current.name
-    }
-
-    // TODO built in: CODEBUILD_BUILD_ARN
-    environment_variable {
-      name = "AWS_ACCOUNT_ID"
-      value = data.aws_caller_identity.current.account_id
-    }
 
     environment_variable {
       name = "IMAGE_REPO_NAME"
