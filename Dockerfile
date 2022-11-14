@@ -13,7 +13,7 @@ WORKDIR /app
 ENV BROWSERSLIST_IGNORE_OLD_DATA=TRUE
 
 COPY package.json yarn.lock ./
-RUN yarn install --production=false \
+RUN yarn install --production=false && \
     chmod +x node_modules/qxpcms-site/bin/generate-deploy-site.sh
 
 COPY . .
