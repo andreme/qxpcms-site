@@ -22,3 +22,7 @@ variable "hosting_certificate_arn" {
 variable "hosting_redirect_from_naked_to_www" {
   default = false
 }
+
+variable "tz" {
+  default = "Australia/Sydney"
+}

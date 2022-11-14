@@ -7,6 +7,8 @@ module "cms-server" {
 
   event_bus = aws_cloudwatch_event_bus.events.name
   event_bus_arn = aws_cloudwatch_event_bus.events.arn
+
+  tz = var.tz
 }
 
 module "site-generator" {

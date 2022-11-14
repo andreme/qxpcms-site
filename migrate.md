@@ -10,6 +10,8 @@ Update `main.tf` with values from `env.tf`
 
 Remove cms terraform files (including `env.tf`)
 
+Add `terraform/.terraform/modules/modules.json` to outer .gitignore
+
 ```
 site> yarn add qxpcms-site
 
@@ -80,4 +82,11 @@ terraform state mv aws_resourcegroups_group.site module.qxpcms.aws_resourcegroup
 terraform state mv module.qxpcms.module.site-generator.aws_cloudwatch_log_group.build-site-generator module.qxpcms.module.cms-server.aws_cloudwatch_log_group.build-site-generator
 terraform state mv module.qxpcms.module.site-deployment.aws_cloudwatch_log_group.ecs-cms-site-generator module.qxpcms.module.cms-server.aws_cloudwatch_log_group.site-deployment
 
+```
+
+Optional:
+```
+terraform state mv aws_acm_certificate.main module.qxpcms.module.hosting.aws_acm_certificate.site[0]
+
+terraform state mv aws_cloudfront_function.redirect-naked-to-www module.qxpcms.module.hosting.aws_cloudfront_function.redirect-naked-to-www[0]
 ```
