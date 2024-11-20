@@ -56,6 +56,7 @@ resource "aws_cloudwatch_event_target" "deploy-site" {
     launch_type = "FARGATE"
     task_count = 1
     task_definition_arn = aws_ecs_task_definition.cms-site-generator.arn
+    propagate_tags = "TASK_DEFINITION"
 
     network_configuration {
       subnets = [
