@@ -2,7 +2,7 @@ FROM public.ecr.aws/lambda/nodejs:20.2024.11.19.18
 
 RUN npm install -g yarn
 
-RUN yum install unzip -y && \
+RUN dnf install unzip -y && \
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip -q awscliv2.zip && \
     ./aws/install && \
