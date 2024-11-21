@@ -7,6 +7,6 @@ aws events put-events --cli-input-json '{"Entries":[{"Source":"qxpcms.'"$PROJECT
 
 pnpm build
 
-pnpm deploy
+pnpm run deploy
 
 aws events put-events --cli-input-json '{"Entries":[{"Source":"qxpcms.'"$PROJECT_NAME"'","Detail":"{\"action\":\"site-deployment.finished\",\"siteDeploymentId\":\"'"$SITE_DEPLOYMENT_ID"'\"}","EventBusName":"'"$PROJECT_NAME"'-events","DetailType":"cms.log.system"}]}' > /dev/null
