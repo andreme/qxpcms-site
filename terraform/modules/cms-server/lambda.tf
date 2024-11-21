@@ -3,7 +3,7 @@ resource "aws_lambda_function" "server" {
   function_name = "${var.project_name}-server"
   role = aws_iam_role.cms-server.arn
   handler = "src/lambda.handler"
-  runtime = "nodejs16.x"
+  runtime = "nodejs20.x"
   timeout = 40
   memory_size = 256
 
