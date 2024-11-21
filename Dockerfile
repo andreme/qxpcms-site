@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:14.2022.06.14.15
+FROM public.ecr.aws/lambda/nodejs:20.2024.11.19.18
 
 RUN npm install -g yarn
 
@@ -12,8 +12,8 @@ WORKDIR /app
 
 ENV BROWSERSLIST_IGNORE_OLD_DATA=TRUE
 
-COPY package.json yarn.lock ./
-RUN yarn install --production=false && \
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install && \
     chmod +x node_modules/qxpcms-site/bin/generate-deploy-site.sh
 
 COPY . .
