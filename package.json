@@ -1,6 +1,6 @@
 {
   "name": "qxpcms-site",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "qxpCMS site module",
   "packageManager": "pnpm@8.14.1",
   "scripts": {},
