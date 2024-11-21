@@ -12,7 +12,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
       - echo Download Dockerfile
-      - DOCKERFILE=https://raw.githubusercontent.com/andreme/qxpcms-site/v$(grep "^qxpcms-site" yarn.lock | cut -d "@" -f 2 | cut -d ":" -f 1)/Dockerfile
+      - DOCKERFILE=https://raw.githubusercontent.com/andreme/qxpcms-site/v$(awk '/^\s+qxpcms-site/,/version:/' pnpm-lock.yaml | grep version | cut -d " " -f 6)/Dockerfile
       - curl -s -o Dockerfile $DOCKERFILE
   build:
     commands:
