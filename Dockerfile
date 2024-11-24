@@ -1,7 +1,7 @@
 FROM public.ecr.aws/lambda/nodejs:20.2024.11.19.18
 
 RUN corepack enable && \
-	corepack prepare pnpm@8.14.1 --activate
+	corepack prepare pnpm@9.14.2 --activate
 
 RUN dnf install unzip -y && \
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
