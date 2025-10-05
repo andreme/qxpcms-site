@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:20.2024.11.19.18
+FROM public.ecr.aws/lambda/nodejs:22.2025.10.04.11
 
 RUN corepack enable && \
 	corepack prepare pnpm@10.12.4 --activate
