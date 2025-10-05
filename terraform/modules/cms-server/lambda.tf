@@ -3,8 +3,8 @@ resource "aws_lambda_function" "server" {
   function_name = "${var.project_name}-server"
   role = aws_iam_role.cms-server.arn
   handler = "src/lambda.handler"
-  runtime = "nodejs20.x"
-  timeout = 40
+  runtime = "nodejs22.x"
+  timeout = 120
   memory_size = 256
 
   s3_bucket = "qxp-cms-app-repo"
