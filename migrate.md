@@ -36,10 +36,6 @@ terraform state mv aws_iam_role_policy.cms-server-access module.qxpcms.module.cm
 terraform state mv aws_iam_role.cms-server module.qxpcms.module.cms-server.aws_iam_role.cms-server
 terraform state mv aws_dynamodb_table.list module.qxpcms.module.cms-server.aws_dynamodb_table.list
 terraform state mv aws_dynamodb_table.cms module.qxpcms.module.cms-server.aws_dynamodb_table.cms
-terraform state mv aws_cognito_user_pool_domain.cms module.qxpcms.module.cms-server.aws_cognito_user_pool_domain.cms
-terraform state mv aws_cognito_user_pool_client.cms module.qxpcms.module.cms-server.aws_cognito_user_pool_client.cms
-terraform state mv aws_cognito_user_pool.cms module.qxpcms.module.cms-server.aws_cognito_user_pool.cms
-terraform state mv aws_cognito_user_group.main module.qxpcms.module.cms-server.aws_cognito_user_group.main
 terraform state mv aws_cloudwatch_log_group.server module.qxpcms.module.cms-server.aws_cloudwatch_log_group.server
 terraform state mv aws_cloudwatch_log_group.qxpcms-system module.qxpcms.module.cms-server.aws_cloudwatch_log_group.qxpcms-system
 terraform state mv aws_apigatewayv2_stage.cms-default module.qxpcms.module.cms-server.aws_apigatewayv2_stage.cms-default

@@ -14,10 +14,9 @@ resource "aws_lambda_function" "server" {
     variables = {
       NODE_ENV = "production"
       TZ = var.tz
-      COGNITO_USER_POOL_ID = aws_cognito_user_pool.cms.id
+      AUTH_JWT_SECRET = aws_s3_bucket.cms-files.id
       PROJECT_NAME = var.project_name
       BABEL_DISABLE_CACHE = 1
-      COGNITO_USER_POOL_WEB_CLIENT_ID = aws_cognito_user_pool_client.cms.id
       API_KEY = var.api_key
       FILE_BUCKET = aws_s3_bucket.cms-files.bucket
       QXP_CMS_PROJECT_NAME = var.project_name
