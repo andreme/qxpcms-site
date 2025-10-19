@@ -13,7 +13,7 @@ WORKDIR /app
 
 ENV BROWSERSLIST_IGNORE_OLD_DATA=TRUE
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install && \
     chmod +x node_modules/qxpcms-site/bin/generate-deploy-site.sh
 
